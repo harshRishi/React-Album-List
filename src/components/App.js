@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 // file imports
 import Navbar from "./Navbar";
 import { Home, AddAlbum, UpdateAlbum, FoF } from "../pages";
-
 import { getPosts, addPost } from "../Api";
 
 function App() {
