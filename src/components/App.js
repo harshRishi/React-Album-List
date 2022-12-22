@@ -14,7 +14,7 @@ import { API_URLS } from "../utils/constants";
 function App() {
   // Our app will maintain the posts and albm state
   const [posts, setPosts] = useState([]);
-  const [album, setAlbum] = useState({});
+  // const [album, setAlbum] = useState({});
 
   // using useEffect we'll fetch the data from the API
   const fetchData = async () => {
@@ -35,7 +35,7 @@ function App() {
     <div className="App">
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home posts={posts} />} />
         <Route path="/add-album" element={<AddAlbum />} />
         <Route path="/update-album" element={<UpdateAlbum />} />
         <Route path="*" element={<FoF />} />
