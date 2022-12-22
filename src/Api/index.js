@@ -6,14 +6,39 @@ export const getPosts = async () => {
   return data;
 };
 
-export const addPost = async (userId, lastId, title) => {
+export const addPost = async (userId, title) => {
   const url = API_URLS.getURL();
   await fetch(url, {
     method: "POST",
     body: JSON.stringify({
       userId,
-      id: lastId + 1,
+      // id: lastId + 1,
       title,
     }),
+  });
+};
+
+export const updateAlbumApiCall = async (userId, id, title) => {
+  const url = API_URLS.getURL();
+  try {
+    const response = await fetch(url + id, {
+      method: "PUT",
+      body: JSON.stringify({
+        userId,
+        id,
+        title,
+      }),
+    });
+    await response.json();
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+};
+
+export const deleteAlbumCall = async (id) => {
+  const url = API_URLS.getURL();
+  await fetch(url + id, {
+    method: "DELETE",
   });
 };
