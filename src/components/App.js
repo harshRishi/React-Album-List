@@ -1,6 +1,8 @@
 // Package Imports
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // file imports
 import Navbar from "./Navbar";
 import { Home, AddAlbum, UpdateAlbum, FoF } from "../pages";
@@ -13,8 +15,13 @@ function App() {
 
   // using useEffect we'll fetch the data from the API
   const fetchData = async () => {
-    const data = await getPosts();
-    setPosts(data);
+    try {
+      const data = await getPosts();
+      setPosts(data);
+    } catch (error) {
+      toast.error("Unable to fetch posts");
+      return;
+    }
   };
   useEffect(() => {
     fetchData();
@@ -32,6 +39,7 @@ function App() {
     };
     const allPosts = [newPosts, ...posts];
     setPosts(allPosts);
+    toast.success("Added Post successfully");
   };
 
   const setUpdateAlbum = (post) => {
@@ -48,6 +56,7 @@ function App() {
     };
     posts[index] = updatedAlbum;
     setUpdateAlbum(posts[index]);
+    toast.success("Updated Post successfully");
   };
 
   const deleteAlbumFromList = (id) => {
@@ -55,6 +64,7 @@ function App() {
     // dummy delete
     const newAlbum = posts.filter((post) => post.id !== id);
     setPosts(newAlbum);
+    toast.success("Post Deleted");
   };
 
   return (
@@ -87,6 +97,19 @@ function App() {
         />
         <Route path="*" element={<FoF />} />
       </Routes>
+      {/* It works as a react component to add Toasts */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
